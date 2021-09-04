@@ -52,20 +52,22 @@ NaN
 # Выжимка
 
 ## Array  
+```go
 len(array) // Получить длину массива  
 newArray := [5]float64{ 98, 93, 77, 82, 83 } // Создание массива, сокращённая запись, тип не обязателен  
 newArray := make([]float64, 5, 10) // Срез массива по индексу, где 10 длина массива на который указывает срез  
 newArray := array[0:5] // Срез массива по индексу, сокращённая запись  
 newArray := append(array, newValue) // Добавление в массив  
 copy(newArray, copyArray) // Копирование массива  
-
+```
 ## Map  
+```go
 newMap = make(map[string]int) // Мапа key:string value:int  
 newMap := map[string]string { "key1": "value1", "key2": "value2" } // сокращённая запись мапы  
 myMap["myKey"] // Получить значение мапы по ключу  
 delete(x, "myKey") // Удалить значение по ключу  
 value, ok := x["key"] // Получить значение мапы по ключу и статус наличия этого значения  
-
+```
 ## Потоки, условия  
 
 ```go
@@ -90,11 +92,10 @@ switch value {
 ```
 
 ## Функции  
-
+```go
 defer myFunc() // отложить выполнение функции, типо setTimeout 0 в js  
 func(){ /* ... */}() // анонимная функция  
-
-
+```
 ```go
 func myFunc(value []float64) float64 {
 	// ...
@@ -159,7 +160,9 @@ func (p *Person) Talk() { // функция особого типа
 ```
 
 ## Типизация, интерфесы/структуры  
+```go
 c := new(Circle) // создаст экземпляр, присвоит значения по умолчанию и вернёт указатель
+```
 ```go
 type Circle struct {
 	x float64

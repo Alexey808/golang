@@ -5,8 +5,7 @@ import (
 	"math"
 	"math/rand"
 	"time"
-) // импорт формат библиотеки
-// импорт формат библиотеки
+)
 
 var globalValue1 bool = 1 == 1
 var globalValue2 string = "Hello World"
@@ -37,9 +36,10 @@ func main() {
 	// testStruct()
 	// testStreams()
 	// testPackages()
+	// testChannel()
 }
 
-// ---
+// --- testVariables
 func testVariables() {
 	localValue := "test"
 	fmt.Println(localValue)
@@ -47,7 +47,7 @@ func testVariables() {
 	fmt.Println(a, b)
 }
 
-// ---
+// --- testFtmScanf
 func testFtmScanf() {
 	fmt.Print("Enter a number: ")
 	var input float64
@@ -56,7 +56,7 @@ func testFtmScanf() {
 	fmt.Println(output)
 }
 
-// ---
+// --- testFor
 func testFor() {
 	for i := 1; i <= 3; i++ {
 		fmt.Println(i)
@@ -71,7 +71,7 @@ func testFor() {
 	}
 }
 
-// ---
+// --- testSwitch
 func testSwitch() {
 	i := 1
 
@@ -85,7 +85,7 @@ func testSwitch() {
 	}
 }
 
-// ---
+// --- testArray
 func testArray() {
 	x := [5]float64{98, 93, 77, 82, 83} // короткая запись создания массива, тип можн не указ.
 
@@ -114,7 +114,7 @@ func testArray() {
 	fmt.Println(a, b, cc)
 }
 
-// ---
+// --- testMap
 func testMap() {
 	x := make(map[string]int)
 	x["key"] = 10
@@ -125,7 +125,7 @@ func testMap() {
 	fmt.Println(value, status)
 }
 
-// ---
+// --- testCondition
 func testCondition() {
 	myMap := make(map[string]string)     // создаём мапу
 	myMap["myKey"] = "MYKEY"             // записываем ключ:значение
@@ -134,7 +134,7 @@ func testCondition() {
 	}
 }
 
-// ---
+// --- testFuncPanic
 func testFuncPanic() {
 	defer func() { // defer отложить выполнение функции
 		fmt.Println("test2")
@@ -146,7 +146,7 @@ func testFuncPanic() {
 	fmt.Println("0")
 }
 
-// ---
+// --- testPointers
 func testPointers() {
 	a := 5
 	pointerOne(&a)
@@ -159,17 +159,20 @@ func testPointers() {
 	c := Circle{x: 0, y: 0, r: 5}
 	fmt.Println(c.area())
 }
+
 func pointerOne(a *int) {
 	*a = 1
 }
+
 func pointerTwo(b *int) {
 	*b = 2
 }
+
 func (c *Circle) area() float64 {
 	return math.Pi * c.r * c.r
 }
 
-// ---
+// --- testStruct
 func testStruct() {
 	c1 := new(Circle)              // создаст экземпляр, присвоит значения по умолчанию и вернёт указатель
 	c2 := Circle{x: 0, y: 0, r: 5} // создаст экземпляр типа, присвоит значения
@@ -185,6 +188,7 @@ func testStruct() {
 type Person struct {
 	name string
 }
+
 type Android struct {
 	person Person
 	model  string
@@ -194,7 +198,7 @@ func (p *Person) Talk() {
 	fmt.Println("Hi, my name is", p.name)
 }
 
-// ---
+// --- testStreams
 func testStreams() {
 	for i := 0; i < 10; i++ {
 		go f(i) // горутина
@@ -209,6 +213,38 @@ func f(n int) {
 		amt := time.Duration(rand.Intn(250))
 		time.Sleep(time.Millisecond * amt)
 		fmt.Println(n, ":", i, "", rand.Intn(250))
+	}
+}
+
+// --- testChannel
+func testChannel() {
+	var c chan string = make(chan string) // создание канала
+
+	go pinger(c)
+	go ponger(c)
+	go printer(c)
+
+	var input string
+	fmt.Scanln(&input) // хак для отладки
+}
+
+func pinger(c chan string) {
+	for i := 0; ; i++ {
+		c <- "ping" // отправка сообщения по каналу
+	}
+}
+
+func ponger(c chan string) {
+	for i := 0; ; i++ {
+		c <- "pong" // отправка сообщения по каналу
+	}
+}
+
+func printer(c chan string) {
+	for {
+		m := <-c // получение сообщения с канала
+		fmt.Println(m)
+		time.Sleep(time.Second * 1)
 	}
 }
 

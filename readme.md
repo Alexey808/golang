@@ -187,7 +187,23 @@ type Shape interface {
     area() float64
 }
 ```
+**Горутины, каналы**
+```go
+func main() {
+  var c chan string = make(chan string) // создание канала
+  go myFunc(c) // запуск горутины с каналом
 
+  for {
+    m := <-c // получение сообщения с канала
+    fmt.Println(m)
+  }
+}
+func myFunc(c chan string) {
+  for i := 0; ; i++ {
+    c <- "ping" // отправка сообщения по каналу
+  }
+}
+```
 ## Пакеты
 ```go
 time.Now() // возвращает текущее время /* 2021-09-01 01:47:17.689248556 +0400 +04 m=+0.000055961 */  
